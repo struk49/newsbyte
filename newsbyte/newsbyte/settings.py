@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "blog",
     "users",
+     'crispy_forms',
+     "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -118,6 +120,7 @@ CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+
 CSRF_COOKIE_SAMESITE = 'Strict'
 CSRF_TRUSTED_ORIGINS = [ 'https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com']
 
@@ -126,3 +129,7 @@ CSRF_TRUSTED_ORIGINS = [ 'https://8000-struk49-newsbyte-c3da3to24a.app.codeanywh
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
