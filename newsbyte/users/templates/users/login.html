@@ -9,13 +9,13 @@
 <div class="row register-bg">
     
     <div class="col-11 col-md-4 mx-auto mt-5">
-        <h1>Sign Up!</h1>
+        <h1>Sign In</h1>
         <form method="POST">
             {% csrf_token %}
 
             {{ form|crispy }} <!-- Use the crispy filter here instead of as_p -->
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
 
             {% if messages %}
             {% for message in messages %}
@@ -24,10 +24,10 @@
             {% endif %}
         </form>
         <div class="pt-3">
-<small classs="text-muted">
-    already have an account <a href="{% url 'login' %}"><button type="submit" class="btn btn-primary">sign in</button></a>
-</small>
-        </div>
+            <small classs="text-muted">
+                need an account? <a href="{% url 'register' %}" <button type="submit" class="btn btn-primary">Register</button></a>
+            </small>
+                    </div>
     </div>
 </div>
 {% endblock %}

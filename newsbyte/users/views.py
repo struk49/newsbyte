@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.contrib.auth.views import LogoutView
 
 class RegisterView(View):
     def get(self, request):
@@ -22,3 +23,8 @@ class RegisterView(View):
         else:
             messages.error(request, "Please correct the errors below.")
             return render(request, "users/register.html", {"form": form})
+
+
+class LogoutAllowGETView(LogoutView):
+    http_method_names = ['get', 'post']
+    template_name = 'users/logout.html'
