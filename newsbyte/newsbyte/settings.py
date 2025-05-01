@@ -125,8 +125,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # For development
 CSRF_COOKIE_SAMESITE = 'Strict'
 CSRF_TRUSTED_ORIGINS = [ 'https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com']
 
-LOGOUT_REDIRECT_URL = '/logout/'  # or the name of any URL in your app
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'               # where to send if not logged in
+LOGIN_REDIRECT_URL = 'index'      # where to go after successful login
 
 
 # Default primary key field type
