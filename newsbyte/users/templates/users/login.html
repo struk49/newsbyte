@@ -1,9 +1,6 @@
-
 {% extends 'blog/base.html' %}
 {% load static %}
-
 {% load crispy_forms_tags %} <!-- Load crispy forms at the top -->
-
 
 {% block content %}
 <div class="row register-bg">
@@ -18,16 +15,17 @@
             <button type="submit" class="btn btn-primary">Sign In</button>
 
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             {% endif %}
         </form>
+
         <div class="pt-3">
-            <small classs="text-muted">
-                need an account? <a href="{% url 'register' %}" <button type="submit" class="btn btn-primary">Register</button></a>
+            <small class="text-muted">
+                Need an account? <a href="{% url 'register' %}">Register</a>
             </small>
-                    </div>
+        </div>
     </div>
 </div>
 {% endblock %}

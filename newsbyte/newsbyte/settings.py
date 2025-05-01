@@ -127,7 +127,7 @@ CSRF_TRUSTED_ORIGINS = [ 'https://8000-struk49-newsbyte-c3da3to24a.app.codeanywh
 
 LOGIN_URL = 'login'               # where to send if not logged in
 LOGIN_REDIRECT_URL = 'index'      # where to go after successful login
-
+LOGOUT_REDIRECT_URL = 'login'  # or wherever you want them to go
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
