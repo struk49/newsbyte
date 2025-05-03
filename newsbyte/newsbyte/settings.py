@@ -120,7 +120,11 @@ CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # For development
+
+# If your static folder is at the project root:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 CSRF_COOKIE_SAMESITE = 'Strict'
 CSRF_TRUSTED_ORIGINS = [ 'https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com']

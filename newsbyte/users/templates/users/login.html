@@ -1,16 +1,14 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %} <!-- Load crispy forms at the top -->
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row register-bg">
-    
-    <div class="col-11 col-md-4 mx-auto mt-5">
+<div class="row register-bg mt-5 ms-4" style="width: 30%;">
+    <div>
         <h1>Sign In</h1>
         <form method="POST">
             {% csrf_token %}
-
-            {{ form|crispy }} <!-- Use the crispy filter here instead of as_p -->
+            {{ form|crispy }}
 
             <button type="submit" class="btn btn-primary">Sign In</button>
 

@@ -1,33 +1,42 @@
-
 {% extends 'blog/base.html' %}
 {% load static %}
-
-{% load crispy_forms_tags %} <!-- Load crispy forms at the top -->
-
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row register-bg">
-    
-    <div class="col-11 col-md-4 mx-auto mt-5">
-        <h1>Sign Up!</h1>
+<div class="row register-bg mt-5 ms-4 p-4 rounded bg-news" style="width: 50%;">
+
+    <div>
+        <h1 class="mb-3">Welcome to NewsByte!</h1>
+        <p><strong>NewsByte</strong> is your go-to source for real-time, bite-sized news across politics, technology, entertainment, and more.</p>
+        <p>We believe in keeping information short, sharp, and verified so you can stay informed without the overwhelm. Join our community to stay ahead of the headlines.</p>
+
+        <hr>
+
+        <h2 class="mt-4">Sign Up!</h2>
         <form method="POST">
             {% csrf_token %}
-
-            {{ form|crispy }} <!-- Use the crispy filter here instead of as_p -->
+            {{ form|crispy }}
 
             <button type="submit" class="btn btn-primary">Register</button>
 
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             {% endif %}
         </form>
+
         <div class="pt-3">
-<small classs="text-muted">
-    already have an account <a href="{% url 'login' %}"><button type="submit" class="btn btn-primary">sign in</button></a>
-</small>
+            <small class="text-muted">
+                Already have an account?
+                <a href="{% url 'login' %}" class="btn btn-primary btn-sm login-text ms-2">Sign in</a>
+            </small>
         </div>
+    </div>
+       <!-- Image container (right) -->
+       <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <img src="{% static 'images/your-image.jpg' %}" alt="Sign In Image" class="img-fluid">
+    </div>
     </div>
 </div>
 {% endblock %}
