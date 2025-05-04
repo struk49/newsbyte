@@ -1,87 +1,43 @@
 /* Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-    background-image: url('../images/'); /* Adjust path as needed */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  
-  /* Layout */
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Header */
-  header {
-    background: #f8f8f8;
-    padding: 20px 0;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  header h1 {
-    font-size: 2rem;
-    text-align: center;
-  }
-  
-  /* Navigation */
-  nav {
-    background-color: #333;
-  }
-  
-  nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-  }
-  
-  nav li {
-    margin: 0 15px;
-  }
-  
-  nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    display: inline-block;
-  }
-  
-  nav a:hover {
-    background-color: #555;
-  }
-  
-  /* Main content */
-  main {
-    padding: 40px 0;
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    margin-bottom: 20px;
-  }
-  
-  /* Footer */
-  footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 0.875rem;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Georgia', serif;
+}
+
+/* Full-page layout */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+              url('/static/images/new-york.jpg'); /* Adjust path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Main content should grow to fill available space */
+main.container {
+  flex: 1;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.875rem;
+  margin-top: auto;
+}
