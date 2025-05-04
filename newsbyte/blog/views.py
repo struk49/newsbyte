@@ -1,13 +1,11 @@
-# blog/views.py
-from django.shortcuts import render
-from django.views import View
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Article
 
-class IndexView(LoginRequiredMixin, View):
-    login_url = 'login'
+class IndexView(LoginRequiredMixin, ListView):
+    model = Article
     template_name = 'blog/index.html'
-
-    def get(self, request):
-        articles = Article.objects.all().order_by('-date')  # Fetch latest articles
-        return render(request, self.template_name, {'articles': articles})
+    context_object_name = 'articles'
+    paginate_by = 1
+    ordering = ['-date']
+    login_url = 'login'
