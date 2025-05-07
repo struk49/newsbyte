@@ -26,8 +26,7 @@
             {% endif %}
             <div class="my-3">
                 {{ article.Content|truncatewords_html:50|safe}}
-            </div>
-            <a href="#">Read More</a>
+            </div><a href="{% url 'article-detail' article.id %}">Read More</a>
         </div>
     </div>
     {% endfor %}
