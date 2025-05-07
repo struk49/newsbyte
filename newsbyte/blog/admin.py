@@ -1,18 +1,17 @@
 from django.contrib import admin
 from .models import Article
+from tinymce.widgets import TinyMCE
+from django import forms
 
-# Register your models here.
-class Article(admin.ModelAdmin):
-    list_display = ('title', 'author', 'date', 'featured')
-    kist_display_links = ('title', 'author')
-    serch_feilds = ('title', 'author', 'content')
-    list_display_links = ('title', 'autor')
-    list_filter = ('author' 'date', 'featured')
-    
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = '__all__'
+        widgets = {
+            'content': TinyMCE(),
+        }
 
-    #Register your models here
-    admin.site.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    form = ArticleForm
 
-
-
-
+admin.site.register(Article, ArticleAdmin)

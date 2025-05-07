@@ -2,65 +2,28 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 col-12 mx-md-auto mx-3 mt-5 mb-5">
+        <div class="col-md-12 text-center">
             <h1 class="fw-bolder">Django Blog</h1>
             <h5 class="text-muted">Test 2</h5>
         </div>
     </div>
 
-    {% for article in page_obj %}
-
-    <div class="container">
     <div class="row">
-        <div class="col-md-6 col-12 mx-md-auto mx-3 mt-5 mb-5">
-            <h3 class="fw-bold">{{ article.title }}</h3>
-            <p class="text-muted">{{ article.date }}</p>
-            <p class="text-muted">Posted By: {{ article.author.username }}</p>
-
-            {% if article.likes.count == 1 %}
-                <p class="text-muted">{{ article.likes.count }} person likes this post</p>
-            {% else %}
-                <p class="text-muted">{{ article.likes.count }} people like this post</p>
-            {% endif %}
-            <div class="my-3">
-                {{ article.Content|truncatewords_html:50|safe}}
-            </div><a href="{% url 'article-detail' article.id %}">Read More</a>
+        {% for article in articles %}
+        <div class="col-md-3 col-sm-6 col-12 mb-4">
+            <div class="card border-3 border-dark" style="border-width: 3px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">{{ article.date }}</p>
+                    <p class="card-text">Posted By: {{ article.author.username }}</p>
+                    <p class="card-text">{{ article.content|truncatechars:50 }}</p> <!-- Truncate content to 50 characters -->
+                    <a href="{% url 'article-detail' article.pk %}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    <nav>
-        <ul class="pagination justify-content-center">
-          {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="?page=1">&laquo; First</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            </li>
-          {% endif %}
-      
-          {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-              <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-            {% endif %}
-          {% endfor %}
-      
-          {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-            </li>
-          {% endif %}
-        </ul>
-      </nav>
-      
 </div>
-</div>
-
 {% endblock %}

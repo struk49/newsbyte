@@ -1,26 +1,25 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 col-12 mx-auto">
-            <a class="btn btn-outline-primary mb-3" href="{% url 'index' %}">← Go Back</a>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 col-12 mx-auto">
+                <a class="btn btn-outline-primary mb-3" href="{% url 'index' %}">← Go Back</a>
+                <h1 class="fw-bold">{{ article.title }}</h1>
+                <p class="text-muted">Posted on {{ article.date }} by {{ article.author.username }}</p>
 
-            <h1 class="fw-bold">{{ article.title }}</h1>
-            <p class="text-muted">Posted on {{ article.date }} by {{ article.author.username }}</p>
+                {% if article.likes.count == 1 %}
+                    <p class="text-muted">{{ article.likes.count }} person likes this post</p>
+                {% else %}
+                    <p class="text-muted">{{ article.likes.count }} people like this post</p>
+                {% endif %}
 
-            {% if article.likes.count == 1 %}
-                <p class="text-muted">{{ article.likes.count }} person likes this post</p>
-            {% else %}
-                <p class="text-muted">{{ article.likes.count }} people like this post</p>
-            {% endif %}
+                <hr>
 
-            <hr>
-
-            <div class="mt-4">
-                {{ article.Content|linebreaks }}
+             <div class="mt-4">
+                    {{ article.content|linebreaks }}  <!-- Use 'content' with lowercase 'c' -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
