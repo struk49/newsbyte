@@ -6,8 +6,10 @@
 }
 
 html, body {
-  height: 100%;
-  font-family: 'Georgia', serif;
+  height: 100%; 
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+
   overflow-x: hidden;
 }
 
@@ -42,3 +44,4 @@ footer {
   font-size: 0.875rem;
   margin-top: auto;
 }
+
