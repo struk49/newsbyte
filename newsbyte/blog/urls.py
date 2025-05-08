@@ -1,6 +1,6 @@
 # blog/urls.py
 from django.urls import path, include
-from blog.views import IndexView, DetailArticleView # Import IndexView from views.py
+from blog.views import IndexView, DetailArticleView, CategoryView # Import IndexView from views.py
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),  # Homepage URL points to IndexView
@@ -8,5 +8,6 @@ urlpatterns = [
     # Other blog-specific URLs, e.g.:
     # path('post/<int:id>/', PostDetailView.as_view(), name='post_detail'),
     path('article/<int:pk>/', DetailArticleView.as_view(), name='article-detail'),
+    path('category/<int:category_id>/', CategoryView.as_view(), name='category-filter'),
 
 ]

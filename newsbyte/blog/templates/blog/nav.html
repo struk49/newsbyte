@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-primary bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'index' %}">NewsByte</a>
+    <a class="navbar-brand text-white" href="{% url 'index' %}">NewsByte</a>
 
     <!-- Toggle button for mobile -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -11,28 +11,31 @@
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarNav">
       
-      <!-- Left side nav items -->
+      <!-- Left side nav items  -->
+      
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        {% for category in categories %}
+        <li class="nav-item text-white">
+          <a class="nav-link text-white" href="{% url 'category-filter' category.id %}">{{ category.name }}</a>
         </li>
         <!-- Add more links as needed -->
+         {% endfor %}
       </ul>
 
       <!-- Right side nav items -->
       <ul class="navbar-nav mb-2 mb-lg-0">
         {% if user.is_authenticated %}
-          <li class="nav-item">
+          <li class="nav-item text-white">
             <form method="POST" action="{% url 'logout' %}" class="d-flex">
               {% csrf_token %}
               <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
             </form>
           </li>
         {% else %}
-          <li class="nav-item">
+          <li class="nav-item text-white>
             <a class="nav-link" href="{% url 'login' %}">Sign in</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item text-white>
             <a class="nav-link" href="{% url 'register' %}">Sign up</a>
           </li>
         {% endif %}
