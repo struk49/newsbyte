@@ -103,11 +103,10 @@ LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins': 'lists link image paste',
-    'toolbar': 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
-    'valid_elements': '@[id|class|style],a[name|href|target|title],img[src|alt|title|width|height],br',  # Allow only <br> tags
-    'forced_root_block': None,  # Prevent TinyMCE from wrapping content in <p> tags
+    'selector': 'textarea',
+    'forced_root_block': False,
 }
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
