@@ -1,13 +1,14 @@
-# blog/urls.py
 from django.urls import path, include
-from blog.views import IndexView, DetailArticleView, CategoryView # Import IndexView from views.py
+from blog.views import IndexView, DetailArticleView, CategoryView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),  # Homepage URL points to IndexView
+    path('', IndexView.as_view(), name='index'),
     path('tinymce/', include('tinymce.urls')),
-    # Other blog-specific URLs, e.g.:
-    # path('post/<int:id>/', PostDetailView.as_view(), name='post_detail'),
     path('article/<int:pk>/', DetailArticleView.as_view(), name='article-detail'),
-    path('category/<int:category_id>/', CategoryView.as_view(), name='category-filter'),
-
+    path('category/<int:category_id>/', CategoryView.as_view(), name='category'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

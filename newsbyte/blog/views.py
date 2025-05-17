@@ -1,6 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Article, Category
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from .forms import ArticleForm
+
 
 class IndexView(LoginRequiredMixin, ListView):
     model = Article
@@ -34,4 +38,17 @@ class CategoryView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = Article
+    form_class = ArticleForm
+    template_name = 'blog/article_form.html'
+    success_url = reverse_lazy('index')
+    login_url = 'login'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 

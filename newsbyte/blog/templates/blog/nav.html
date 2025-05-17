@@ -10,35 +10,32 @@
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      
+
       <!-- Left side nav items  -->
-      
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% for category in categories %}
-        <li class="nav-item text-white">
-          <a class="nav-link text-white" href="{% url 'category-filter' category.id %}">{{ category.name }}</a>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'category' category_id=category.id %}">{{ category.name }}</a>
         </li>
-        <!-- Add more links as needed -->
-         {% endfor %}
+        {% endfor %}
       </ul>
 
       <!-- Right side nav items -->
       <ul class="navbar-nav mb-2 mb-lg-0">
         {% if user.is_authenticated %}
-          <li class="nav-item text-white">
+          <li class="nav-item">
             <form method="POST" action="{% url 'logout' %}" class="d-flex">
               {% csrf_token %}
               <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
-            </form
+            </form>
           </li>
         {% else %}
-        <li class="nav-item me-2">
-          <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Sign in</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-light btn-sm text-primary" href="{% url 'register' %}">Sign up</a>
-        </li>
-        
+          <li class="nav-item me-2">
+            <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Sign in</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-light btn-sm text-primary" href="{% url 'register' %}">Sign up</a>
+          </li>
         {% endif %}
       </ul>
     </div>

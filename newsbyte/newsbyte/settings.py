@@ -1,22 +1,21 @@
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory as Path object
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')  # Set a default key for development
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key-for-dev')
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'  # Ensure DEBUG is a boolean
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# Allow only the following hosts to access the Django application
+# Hosts allowed to serve the application
 ALLOWED_HOSTS = [
-    '8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com',  # CodeAnywhere URL
-    'localhost',  # For local development
-    '127.0.0.1',  # For local development
+    '8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com',  # Your CodeAnywhere URL
+    'localhost',
+    '127.0.0.1',
 ]
-
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -26,8 +25,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    # Your apps
     "blog",
     "users",
+
+    # Third-party apps
     'crispy_forms',
     "crispy_bootstrap5",
     'tinymce',
@@ -55,6 +58,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "blog.context_processors.categories_processor",  # Custom context processor for categories
             ],
         },
     },
@@ -62,14 +66,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "newsbyte.wsgi.application"
 
-# Database
+# Database - Using SQLite for development; switch to PostgreSQL for production
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",  # Change to PostgreSQL in production
+        "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -85,29 +90,42 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-CSRF_COOKIE_SECURE = True
-
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-CSRF_COOKIE_SAMESITE = 'Strict'
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://localhost,https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com').split(',')
+# Media files (user uploaded content)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# Security settings
+CSRF_COOKIE_SECURE = False  # Set True if using HTTPS in production
+CSRF_COOKIE_SAMESITE = 'Strict'
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://localhost,https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com'
+).split(',')
+
+# Login URLs
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
+# TinyMCE configuration
 TINYMCE_DEFAULT_CONFIG = {
     'selector': 'textarea',
     'forced_root_block': False,
 }
 
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# Crispy forms config
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
