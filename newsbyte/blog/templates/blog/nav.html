@@ -13,6 +13,11 @@
 
       <!-- Left side nav items  -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Shop link -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'shop' %}">Shop</a>
+        </li>
+
         {% for category in categories %}
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'category' category_id=category.id %}">{{ category.name }}</a>
