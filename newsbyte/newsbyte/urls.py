@@ -10,6 +10,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),  # blog-related URLs
     path('users/', include('users.urls')),  # users-related URLs
     path('', RegisterView.as_view(), name='register'),  # Homepage is now RegisterView
+    path('shop/', include('shop.urls')),
+
 ]
 
 if settings.DEBUG:

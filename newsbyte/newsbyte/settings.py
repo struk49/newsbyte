@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Your apps
     "blog",
     "users",
+    "shop",
 
     # Third-party apps
     'crispy_forms',

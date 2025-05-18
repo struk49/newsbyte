@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+        <div class="card-body">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <a href="{{ product.amazon_link }}" target="_blank" class="btn btn-warning">Buy on Amazon</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
