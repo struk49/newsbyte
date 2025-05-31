@@ -1,23 +1,19 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv  # <-- Add this
-
-# Load environment variables from .env file
-load_dotenv()  # <-- Add this
 
 # Base directory as Path object
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise Exception("Missing SECRET_KEY environment variable")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Hosts allowed to serve the application
-ALLOWED_HOSTS = os.getenv(
+ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
     'localhost,127.0.0.1,8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com'
 ).split(',')
@@ -51,11 +47,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-     "whitenoise.middleware.WhiteNoiseMiddleware",  # Add this
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Add this
 ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 
 ROOT_URLCONF = "newsbyte.urls"
 
@@ -77,7 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "newsbyte.wsgi.application"
 
-# Database
+# Database (default is SQLite, replace with production DB in Render)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -112,7 +107,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SAMESITE = 'Strict'
-CSRF_TRUSTED_ORIGINS = os.getenv(
+CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'https://localhost,https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com'
 ).split(',')
