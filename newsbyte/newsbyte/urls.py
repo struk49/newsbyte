@@ -11,6 +11,7 @@ urlpatterns = [
     path('users/', include('users.urls')),  # users-related URLs
     path('', RegisterView.as_view(), name='register'),  # Homepage is now RegisterView
     path('shop/', include('shop.urls')),
+    path('', include('pages.urls')),
 
 ]
 

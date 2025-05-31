@@ -5,8 +5,9 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%; 
+html,
+body {
+  height: 100%;
   font-family: "Lato", sans-serif;
   font-weight: 500;
 
@@ -20,7 +21,8 @@ html, body {
   min-height: 100vh;
 
   background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
-              url('/static/images/new-york.jpg'); /* Adjust path as needed */
+    url('/static/images/new-york.jpg');
+  /* Adjust path as needed */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -36,12 +38,37 @@ main.container {
 }
 
 /* Footer */
-footer {
-  background: #333;
-  color: #fff;
+.site-footer {
+  background-color: #1a1a1a;
+  color: #ddd;
+  padding: 30px 0;
   text-align: center;
-  padding: 20px 0;
-  font-size: 0.875rem;
-  margin-top: auto;
+  font-size: 14px;
 }
 
+.footer-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links li a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+  color: #00bfff;
+  /* light blue hover color */
+  text-decoration: underline;
+}
