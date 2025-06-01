@@ -1,5 +1,19 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv  # <-- Add this
+
+load_dotenv()  # <-- Load from .env file
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Base directory as Path object
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +29,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Hosts allowed to serve the application
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
-    'localhost,127.0.0.1,8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com'
+    'localhost,127.0.0.1,newsbyte-ubwv.onrender.com'
 ).split(',')
 
 # Application definition
@@ -37,6 +51,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'tinymce',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -47,10 +63,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Add this
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 ROOT_URLCONF = "newsbyte.urls"
 
@@ -93,11 +108,18 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+
+#STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Your local static folders (only for development)
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Required for collectstatic in production
+
+
+
 
 # Media files
 MEDIA_URL = '/media/'
@@ -109,8 +131,9 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SAMESITE = 'Strict'
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
-    'https://localhost,https://8000-struk49-newsbyte-c3da3to24a.app.codeanywhere.com'
+    'https://localhost,https://newsbyte-ubwv.onrender.com'
 ).split(',')
+
 
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -135,6 +158,15 @@ TINYMCE_DEFAULT_CONFIG = {
 # Crispy forms config
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+print("DEBUG Cloudinary ENV check:", os.environ.get('CLOUDINARY_CLOUD_NAME'))
+
+
+
+
+
+
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
