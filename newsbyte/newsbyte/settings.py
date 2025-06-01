@@ -1,21 +1,13 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv  # <-- Add this
+from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
-load_dotenv()  # <-- Load from .env file
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
+# Load environment variables from .env file
+load_dotenv()
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Base directory as Path object
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -65,8 +57,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-
 ROOT_URLCONF = "newsbyte.urls"
 
 TEMPLATES = [
@@ -87,7 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "newsbyte.wsgi.application"
 
-# Database (default is SQLite, replace with production DB in Render)
+# Database (default SQLite, replace with your production DB if needed)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -108,22 +98,24 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = '/static/'
 
-#STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Cloudinary configuration (load keys from environment variables)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# Storage backends for static and media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# URLs served by Cloudinary CDN
+STATIC_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/static/'
+MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/media/'
 
-# Your local static folders (only for development)
+# Local static files folder (used during development before collectstatic)
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
-
-
-
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 # Security settings
 CSRF_COOKIE_SECURE = not DEBUG
@@ -133,7 +125,6 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'https://localhost,https://newsbyte-ubwv.onrender.com'
 ).split(',')
-
 
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -158,15 +149,6 @@ TINYMCE_DEFAULT_CONFIG = {
 # Crispy forms config
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-print("DEBUG Cloudinary ENV check:", os.environ.get('CLOUDINARY_CLOUD_NAME'))
-
-
-
-
-
-
-
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
