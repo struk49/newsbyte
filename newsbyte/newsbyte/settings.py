@@ -68,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # <-- Add this
 ]
 
 ROOT_URLCONF = "newsbyte.urls"
@@ -125,10 +126,11 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 if DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 else:
     # Render collects static files, no need for hashed Cloudinary unless explicitly desired
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+   STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Optional: CDN URLs from Cloudinary (only if using Cloudinary static storage)
 if not DEBUG and STATICFILES_STORAGE.startswith("cloudinary"):
