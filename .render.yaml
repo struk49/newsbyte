@@ -12,5 +12,3 @@ services:
         value: newsbyte.settings
       - key: PYTHON_VERSION
         value: 3.10.13
-      - key: PYTHONPATH
-        value: /opt/render/project/src/newsbyte
