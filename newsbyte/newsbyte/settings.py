@@ -1,6 +1,6 @@
+from dotenv import load_dotenv
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -10,21 +10,27 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# Secret key
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise Exception("Missing SECRET_KEY environment variable")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
-# Hosts allowed to serve the application
+# Debug mode
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+# Allowed hosts
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
     'localhost,127.0.0.1,newsbyte-ubwv.onrender.com'
 ).split(',')
 
-# Application definition
+# Cloudinary config
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+)
+
+# Installed apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -40,11 +46,11 @@ INSTALLED_APPS = [
     "pages",
 
     # Third-party apps
-    'crispy_forms',
+    "crispy_forms",
     "crispy_bootstrap5",
-    'tinymce',
-    'cloudinary',
-    'cloudinary_storage',
+    "tinymce",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -62,7 +68,7 @@ ROOT_URLCONF = "newsbyte.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -77,7 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "newsbyte.wsgi.application"
 
-# Database (default SQLite, replace with your production DB if needed)
+# Database config (SQLite default)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -85,7 +91,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+# Password validators
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -99,32 +105,37 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Cloudinary configuration (load keys from environment variables)
-# Cloudinary configuration
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Your local static folder
+STATIC_ROOT = BASE_DIR / "staticfiles"    # Where collectstatic puts files for production
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Cloudinary storage config
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# Use default Django staticfiles storage locally, or configure Cloudinary Static Storage if needed
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    # Uncomment this if you want to serve static files from Cloudinary in production
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
+# Cloudinary credentials for django-cloudinary-storage
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-
-# URLs served by Cloudinary CDN
-STATIC_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/static/'
-MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/media/'
-
-# Local static files folder (used during development before collectstatic)
-
-
+# If you want to serve static and media URLs from Cloudinary CDN (only if you use cloudinary static storage)
+if not DEBUG:
+    STATIC_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/static/'
+    MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/media/'
 
 # Security settings
 CSRF_COOKIE_SECURE = not DEBUG
@@ -149,7 +160,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
-# TinyMCE configuration
+# TinyMCE config
 TINYMCE_DEFAULT_CONFIG = {
     'selector': 'textarea',
     'forced_root_block': False,
