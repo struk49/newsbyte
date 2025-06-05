@@ -9,6 +9,7 @@ services:
         value: newsbyte.settings
       - key: PYTHON_VERSION
         value: 3.11
+
     disk:
       name: media
       mountPath: /mnt/data
