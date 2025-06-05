@@ -1,12 +1,8 @@
 services:
   - type: web
     name: newsbyte
-    env: python
-    buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
-      python manage.py collectstatic --noinput
-      python manage.py migrate
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     startCommand: gunicorn newsbyte.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
