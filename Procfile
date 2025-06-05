@@ -1,1 +1,4 @@
-web: gunicorn newsbyte.wsgi --log-file -
+
+web: gunicorn newsbyte.newsbyte.wsgi:application
+
+

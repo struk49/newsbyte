@@ -1,15 +1,18 @@
 services:
   - type: web
     name: newsbyte
-    runtime: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: gunicorn newsbyte.wsgi:application
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn newsbyte.newsbyte.wsgi:application
+    staticPublishPath: staticfiles
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: newsbyte.settings
+        value: newsbyte.newsbyte.settings
       - key: PYTHON_VERSION
         value: 3.11
-
-    disk:
-      name: media
-      mountPath: /mnt/data
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: DEBUG
+        value: "False"
