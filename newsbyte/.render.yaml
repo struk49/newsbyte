@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: newsbyte
+    env: python
+   buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+
+    startCommand: gunicorn newsbyte.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: newsbyte.settings
+      - key: PYTHON_VERSION
+        value: 3.10.13
