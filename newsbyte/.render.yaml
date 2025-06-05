@@ -2,8 +2,8 @@ services:
   - type: web
     name: newsbyte
     runtime: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: gunicorn newsbyte.wsgi:application
+    buildCommand: pip install -r newsbyte/requirements.txt && cd newsbyte && python manage.py collectstatic --noinput
+    startCommand: cd newsbyte && gunicorn newsbyte.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: newsbyte.settings
