@@ -1,9 +1,6 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
 # Load environment variables from .env
 load_dotenv()
@@ -24,19 +21,6 @@ ALLOWED_HOSTS = os.getenv(
     "localhost,127.0.0.1,newsbyte-ubwv.onrender.com"
 ).split(",")
 
-# Cloudinary configuration
-cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.getenv("CLOUDINARY_API_KEY"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET")
-)
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-}
-
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -56,8 +40,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "tinymce",
-    "cloudinary",
-    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -68,7 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "newsbyte.urls"
@@ -114,36 +96,20 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static and media files
+# Static and media files (Render Disk)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = "/mnt/data/media"  # Render disk mount
+
 STATIC_URL = "/static/"
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Used for collectstatic
 
-
-# Storage configuration
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-if DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-else:
-    # Render collects static files, no need for hashed Cloudinary unless explicitly desired
-   STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Optional: CDN URLs from Cloudinary (only if using Cloudinary static storage)
-if not DEBUG and STATICFILES_STORAGE.startswith("cloudinary"):
-    STATIC_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/static/'
-    MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/media/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Security settings
 CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_SAMESITE = "Strict"
 
 CSRF_TRUSTED_ORIGINS = os.getenv(
     "CSRF_TRUSTED_ORIGINS",
@@ -156,8 +122,8 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
-SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
-X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
+X_FRAME_OPTIONS = "DENY"
 
 # Authentication
 LOGIN_URL = "login"
